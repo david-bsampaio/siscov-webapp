@@ -15,23 +15,24 @@ export class ProdutoService {
 
   constructor(public afs:AngularFirestore) {
     this.produtosCollection = this.afs.collection('produto',ref => ref.orderBy('nome'));
-    // this.tasks = this.afs.collection('tasks').valueChanges();
-    // this.produtos = this.produtosCollection.snapshotChanges().map(changes => {
-    //   return changes.map(a => {
-    //     const data = a.payload.doc.data() as Produto;
-    //     data.uuid = a.payload.doc.id;
-    //     return data;
-    //   });
-    // });
-      this.produtos = this.produtosCollection.snapshotChanges().pipe(
+     //this.tasks = this.afs.collection('tasks').valueChanges();
+     this.produtos = this.produtosCollection.snapshotChanges().map(changes => {
+       return changes.map(a => {
+         const data = a.payload.doc.data() as Produto;
+         data.uuid = a.payload.doc.id;
+         return data;
+       });
+     });
+/*      this.produtos = this.produtosCollection.snapshotChanges().pipe(
         map(actions => {
         return actions.map(a => {
             const data = a.payload.doc.data() as Produto;
-            //const id = a.payload.doc.id;
+            const id = a.payload.doc.id;
             return { ...data };
         });
         })
       );
+      */
   }
 
   getProdutos() {
