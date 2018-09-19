@@ -1,0 +1,80 @@
+<ion-header>
+    <ion-navbar color="primary">
+      <ion-toolbar>
+          <ion-title>
+          Produtos
+        </ion-title>
+      </ion-toolbar>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+      <ion-toolbar>
+          <ion-searchbar (ionInput)="getItems($event)">
+            <button ng-if="search.length"
+          class="input-button button button-icon ion-android-close"
+          ng-click="clearSearch()"></button>
+          </ion-searchbar>
+          <ion-buttons class="botao_toolbar" end>
+            <button ion-button icon-only (click)="inserir()">
+                <ion-icon name="add"></ion-icon>
+            </button>
+        </ion-buttons>
+      </ion-toolbar>
+    <ion-col col-12>
+      <ion-list no-margin>
+      <li *ngFor="let item of produtos | async">
+        <!-- List big image Header -->
+        <!--<div class="collapsible-header">-->
+        <div class="collapsible-header" (click)="toggleGroup(item)">
+          <ion-item no-padding>
+            <h2 padding-left item-title>{{item.nome}}</h2>
+            <h3 padding-left item-subtitle>UUID: {{item.UUID}}</h3>
+          </ion-item>
+        </div>
+        <!-- List big image Body -->
+        <div class="item-accordion" [ngClass]="{'active': isGroupShown(item) }" [hidden]="!isGroupShown(item)">
+        <!--<div class="item-accordion">-->
+          <ion-item transparent no-lines style="color: white">
+              <h2 padding-left>Descrição: {{item.descricao}}</h2>
+          </ion-item>
+          <button ion-button clear color="secondary" (click)="editarProduto(item)">
+              <ion-icon name="create"></ion-icon>
+              Editar
+            </button>
+            <button ion-button clear color="danger" (click)="removerProduto(item)">
+              <ion-icon name="trash"></ion-icon>
+              Remover
+            </button>
+        </div>
+        <!--end-->
+      </li>
+      </ion-list>
+  </ion-col>
+      <!-- <mat-accordion class="example-headers-align">
+          <mat-expansion-panel *ngFor="let item of produtos | async">
+            <mat-expansion-panel-header>
+                <mat-panel-title>{{ item.nome }}</mat-panel-title>
+                <mat-panel-description>{{ item.descricao }}</mat-panel-description>
+            </mat-expansion-panel-header>
+            <p>{{ item.descricao }}</p>
+            <mat-action-row>
+                <button ion-button clear color="secondary" (click)="editarProduto(item)">
+                    <ion-icon name="create"></ion-icon>
+                    Editar
+                  </button>
+                  <button ion-button clear color="danger" (click)="removerProduto(item)">
+                    <ion-icon name="trash"></ion-icon>
+                    Remover
+                  </button>
+            </mat-action-row>
+          </mat-expansion-panel>
+          </mat-accordion> -->
+  
+    <!-- <ion-fab top right edge>
+      <button ion-fab color="light" (click)="inserir()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-fab> -->
+  </ion-content>
+  
